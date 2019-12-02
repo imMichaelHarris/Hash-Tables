@@ -77,7 +77,12 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash(key)
+        print(index)
+        if self.storage[index] == None:
+            print("ERROR!")
+        else:
+            self.storage[index] = None
 
 
     def retrieve(self, key):
@@ -102,6 +107,8 @@ class HashTable:
 
 my_table = HashTable(10)
 my_table.insert("bimmy", "hey")
+print(my_table.storage)
+my_table.remove("bimmy")
 print(my_table.storage)
 
 # if __name__ == "__main__":

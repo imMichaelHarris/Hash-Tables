@@ -27,13 +27,13 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
-        myhash = 0
-        for i in key:
-            # print(ord(i))
-            myhash = ((ord(i) + myhash)) % self.capacity
+        # myhash = self.count
+        # for i in key:
+        #     # print(ord(i))
+        #     myhash = ((ord(i) + myhash)) % self.capacity
             
         # print(f"myhash {myhash}")
-        return myhash
+        return hash(key)
 
 
     def _hash_djb2(self, key):
@@ -63,16 +63,19 @@ class HashTable:
         '''
         # Use hash function to get an index and store the value in that index
         # If key doesn't exist error
-        index = self._hash(key)
-        print(f"count, {self.count}, {self.capacity}")
+        index = self._hash_mod(key)
+        # print(f"count, {self.count}, {self.capacity}")
+        if self.storage[index] is not None:
+            print("Warning")
+            return
         if self.count >= self.capacity:
-            print("Nope")
+            # print("Nope")
             self.resize()
             
         # if index > self.count:
         #     print("Ha")
         #     return
-        self.storage[self.count] = value
+        self.storage[index] = value
         self.count += 1
 
 
@@ -101,10 +104,12 @@ class HashTable:
         Fill this in.
         '''
         index = self._hash(key)
+        print(self._hash(key))
+        print(self.storage[0])
         if self.storage[index] == None:
             return None
         else:
-            print("else", self.storage[index])
+            # print("else", self.storage[index])
             return self.storage[index]
 
 
@@ -123,7 +128,7 @@ class HashTable:
         self.storage = new_storage
 
 my_table = HashTable(8)
-my_table.insert("bimmy", "hey")
+# my_table.insert("bimmy", "hey")
 my_table.insert("key-0", "val-0")
 my_table.insert("key-1", "val-1")
 my_table.insert("key-2", "val-2")
@@ -135,9 +140,11 @@ my_table.insert("key-7", "val-7")
 my_table.insert("key-8", "val-8")
 my_table.insert("key-9", "val-9")
 
-print(my_table.storage)
-my_table.retrieve("bimmy")
-print(my_table.storage)
+my_table.retrieve("key-0")
+
+# print(my_table.storage)
+# my_table.retrieve("bimmy")
+# print(my_table.storage)
 
 # if __name__ == "__main__":
 #     ht = HashTable(2)

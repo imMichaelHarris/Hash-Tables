@@ -15,6 +15,7 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
         self.storage = [None] * capacity
+        self.count = 0
 
 
     def _hash(self, key):
@@ -28,10 +29,10 @@ class HashTable:
         '''
         myhash = 0
         for i in key:
-            print(ord(i))
+            # print(ord(i))
             myhash = ((ord(i) + myhash)) % self.capacity
             
-        print(f"myhash {myhash}")
+        # print(f"myhash {myhash}")
         return myhash
 
 
@@ -63,10 +64,16 @@ class HashTable:
         # Use hash function to get an index and store the value in that index
         # If key doesn't exist error
         index = self._hash(key)
-        if index > self.capacity:
+        print(f"count, {self.count}, {self.capacity}")
+        if self.count >= self.capacity:
             print("Nope")
-        self.storage[index] = value
-
+            self.resize()
+            
+        # if index > self.count:
+        #     print("Ha")
+        #     return
+        self.storage[self.count] = value
+        self.count += 1
 
 
     def remove(self, key):
@@ -78,7 +85,7 @@ class HashTable:
         Fill this in.
         '''
         index = self._hash(key)
-        print(index)
+        # print(index)
         if self.storage[index] == None:
             print("ERROR!")
         else:
@@ -93,7 +100,12 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash(key)
+        if self.storage[index] == None:
+            return None
+        else:
+            print("else", self.storage[index])
+            return self.storage[index]
 
 
     def resize(self):
@@ -103,12 +115,28 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        self.capacity *= 2
+        new_storage = [None] * self.capacity
 
-my_table = HashTable(10)
+        for i in range(self.count):
+            new_storage[i] = self.storage[i]
+        self.storage = new_storage
+
+my_table = HashTable(8)
 my_table.insert("bimmy", "hey")
+my_table.insert("key-0", "val-0")
+my_table.insert("key-1", "val-1")
+my_table.insert("key-2", "val-2")
+my_table.insert("key-3", "val-3")
+my_table.insert("key-4", "val-4")
+my_table.insert("key-5", "val-5")
+my_table.insert("key-6", "val-6")
+my_table.insert("key-7", "val-7")
+my_table.insert("key-8", "val-8")
+my_table.insert("key-9", "val-9")
+
 print(my_table.storage)
-my_table.remove("bimmy")
+my_table.retrieve("bimmy")
 print(my_table.storage)
 
 # if __name__ == "__main__":

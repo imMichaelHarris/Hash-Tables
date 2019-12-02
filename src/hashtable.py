@@ -29,10 +29,10 @@ class HashTable:
         myhash = 0
         for i in key:
             print(ord(i))
-            myhash = ((ord(i) + myhash)) % 10
+            myhash = ((ord(i) + myhash)) % self.capacity
             
         print(f"myhash {myhash}")
-        return hash(key)
+        return myhash
 
 
     def _hash_djb2(self, key):
@@ -55,12 +55,17 @@ class HashTable:
     def insert(self, key, value):
         '''
         Store the value with the given key.
-
+        
         Hash collisions should be handled with Linked List Chaining.
 
         Fill this in.
         '''
-        pass
+        # Use hash function to get an index and store the value in that index
+        # If key doesn't exist error
+        index = self._hash(key)
+        if index > self.capacity:
+            print("Nope")
+        self.storage[index] = value
 
 
 
@@ -95,8 +100,9 @@ class HashTable:
         '''
         pass
 
-my_table = HashTable(3)
-my_table._hash("test")
+my_table = HashTable(10)
+my_table.insert("bimmy", "hey")
+print(my_table.storage)
 
 # if __name__ == "__main__":
 #     ht = HashTable(2)

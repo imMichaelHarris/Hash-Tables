@@ -26,8 +26,12 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
+        myhash = 0
         for i in key:
-            print(i)
+            print(ord(i))
+            myhash = ((ord(i) + myhash)) % 10
+            
+        print(f"myhash {myhash}")
         return hash(key)
 
 
@@ -92,7 +96,7 @@ class HashTable:
         pass
 
 my_table = HashTable(3)
-my_table._hash("sup")
+my_table._hash("test")
 
 # if __name__ == "__main__":
 #     ht = HashTable(2)
